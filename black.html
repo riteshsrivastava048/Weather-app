@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"> 
+
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="blackcss.css">
+</head>
+
+<body>
+
+    <main>
+        <header>
+            <div class="search">
+                <input type="search" id="search-bar" placeholder="Search for a city...">
+                <button><img class="simg" src="./images/search1.png" alt=""></button>
+            </div>
+        </header>
+        <div class="background">
+            <video autoplay muted loop>
+                <source src="./video/bcgvideo.mp4" type="video/mp4">
+
+            </video>
+        </div>
+        <div class="error">
+            <div class="ui-alert" data-ui-collapse data-ui-autodestroy data-ui-transition="scale-down-fade" role="alert"
+                style="background-color: #FF6666; color: white; border-color: darkred;">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path fill="#f5390a"
+                        d="M569.5 440C588 472 564.8 512 527.9 512H48.1c-36.9 0-60-40.1-41.6-72L246.4 24c18.5-32 64.7-32 83.2 0l239.9 416zM288 354c-25.4 0-46 20.6-46 46s20.6 46 46 46 46-20.6 46-46-20.6-46-46-46zm-43.7-165.3l7.4 136c.3 6.4 5.6 11.3 12 11.3h48.5c6.4 0 11.6-5 12-11.3l7.4-136c.4-6.9-5.1-12.7-12-12.7h-63.4c-6.9 0-12.4 5.8-12 12.7z" />
+                </svg>
+                <div class="ui-alert-inner"><strong>Error</strong> Please enter correct <b>CITY</b> name</div>
+                <button type="button" class="ui-btn-close" data-ui-dismiss="collapse" aria-label="Close"
+                    style="font-size: 16px; color: #333;"></button>
+            </div>
+        </div>
+        <div class="weather-container reportDisplay">
+
+            <div class="top">
+                <div class="topl">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path fill="#fa2500"
+                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                    </svg>
+
+                    <div class="cityName">City</div>
+
+                </div>
+                <div class="topr">
+                    <div class="dated">
+                        <div class="date">Date</div>
+                        <img src="./images/calenderedited.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="weather-icon">
+                <img src="./images/clear.png" alt="Weather Icon" id="weather-icon">
+            </div>
+            <div class="circle">
+                <div class="upper-line">
+                    <h1 id="temperature">
+                        25°C
+                    </h1>
+                    <div class="button">
+                        <button class="ctf1">C</button>
+                        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path fill="#8b5df2"
+                                    d="M438.6 150.6c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.7 96 32 96C14.3 96 0 110.3 0 128s14.3 32 32 32l306.7 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96zm-333.3 352c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 416 416 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96z" />
+                            </svg></div>
+                        <button class="ctf2">F</button>
+                    </div>
+                </div>
+            </div>
+            <div class="weather-details">
+                <p id="wind-speed">Wind Speed: <br><span id="speedValue"></span> km/h</p>
+                <p id="humidity">Humidity: <br> <span id="humidityValue"></span> %</p>
+            </div>
+        </div>
+    </main>
+    <script type="module">
+
+        import { Collapse } from "https://cdn.jsdelivr.net/npm/jolty@0.6.2/dist/jolty.esm.min.js";
+
+        Collapse.initAll();
+
+        const apiKey = "b530b88360037c6c3ecc095c150ff2a9";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".simg");
+        const weatherIcon = document.querySelector("#weather-icon");
+        const arrow = document.querySelector(".arrow");
+
+        document.querySelector('.ui-btn-close').addEventListener('click', function () {
+            location.reload();
+        });
+
+        async function checkWeather(city) {
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+            var data = await response.json();
+
+            if (response.status == 404) {
+                document.querySelector(".error").style.display = "flex";
+                document.querySelector(".reportDisplay").style.display = "none";
+            }
+            else {
+
+                let a = (data.main.temp).toFixed(1);
+                document.querySelector(".cityName").innerHTML = data.name.toUpperCase();
+
+                let unit = 'C'; 
+                let tempElement = document.querySelector("#temperature");
+
+                tempElement.innerHTML = a + "°" + unit;
+
+                arrow.addEventListener("click", () => {
+                    if (unit === 'C') {
+                        let F = (9 / 5) * a + 32;
+                        tempElement.innerHTML = F.toFixed(1) + "°F";
+                        unit = 'F'; 
+                    } else {
+                        tempElement.innerHTML = a + "°C";
+                        unit = 'C'; 
+                    }
+                })
+
+                document.querySelector("#humidityValue").innerHTML = data.main.humidity;
+                document.querySelector("#speedValue").innerHTML = data.wind.speed;
+
+                if (data.weather[0].main == "Clouds") {
+                    weatherIcon.src = "./images/clouds.png"
+                }
+                else if (data.weather[0].main == "Haze") {
+                    weatherIcon.src = "data:image/png;base64,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"  //images\haze.jpg
+                }
+                else if (data.weather[0].main == "Clears") {
+                    weatherIcon.src = "./images/clear.png"
+                }
+                else if (data.weather[0].main == "Drizzle") {
+                    weatherIcon.src = "./images/drizzle.png"
+                }
+                else if (data.weather[0].main == "Mist") {
+                    weatherIcon.src = "./images/mist.png"
+                }
+                else if (data.weather[0].main == "Rain") {
+                    weatherIcon.src = "./images/rain.png"
+                }
+                else if (data.weather[0].main == "Snow") {
+                    weatherIcon.src = "./images/snow.png"
+                }
+
+                
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                const now = new Date();
+                const date = now.getDate();
+                const month = monthNames[now.getMonth()];
+                const year = now.getFullYear();
+                const hours = now.getHours();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0'); 
+
+                const fullDate = `${date}`;
+                const fullTime = `${hours} : ${minutes} : ${seconds}`;
+
+                const date1 = document.querySelector(".date");
+                date1.innerHTML = fullDate;
+                
+
+
+                document.querySelector(".error").style.display = "none";
+                document.querySelector(".reportDisplay").style.display = "block";
+            }
+        }
+
+        searchBtn.addEventListener("click", () => {
+            checkWeather(searchBox.value); 
+        })
+    </script>
+</body>
+
+</html>
+
+
